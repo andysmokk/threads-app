@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <ClerkProvider>
+    <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
           <Topbar />
@@ -30,9 +30,7 @@ export default function RootLayout({
             <LeftSidebar />
 
             <section className="main-container">
-              <div className="w-full max-w-4xl">
-                {children}
-              </div>
+              <div className="w-full max-w-4xl">{children}</div>
             </section>
 
             <RightSidebar />
@@ -41,6 +39,6 @@ export default function RootLayout({
           <Bottombar />
         </body>
       </html>
-    // </ClerkProvider>
+    </ClerkProvider>
   );
 }
