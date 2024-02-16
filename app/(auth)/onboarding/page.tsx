@@ -10,6 +10,7 @@ const Page = async () => {
   const userData = {
     id: user?.id,
     objectId: userInfo?._id,
+    name: userInfo?.name || "",
     username: userInfo?.username || user?.firstname || "",
     bio: userInfo?.bio || "",
     image: userInfo?.image || user?.imageUrl,
