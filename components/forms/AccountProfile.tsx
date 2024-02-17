@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { UserValidation } from "@/lib/validations/user";
+import { isBase64Image } from "@/lib/utils";
 
 interface Props {
   user: {
@@ -70,9 +71,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   };
 
   function onSubmit(values: z.infer<typeof UserValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const blob = values.profile_photo;
+
+    const hasImageChanged = isBase64Image(blob);
+    console.log("🚀 ~ onSubmit ~ hasImageChanged:", hasImageChanged);
   }
 
   return (
