@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import TreadCard from "@/components/cards/TreadCard";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { findThreadById } from "@/lib/actions/thread.actions";
+import Comment from "@/components/forms/Comment";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   if (!params.id) return null;
@@ -29,6 +30,14 @@ const Page = async ({ params }: { params: { id: string } }) => {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+        />
+      </div>
+
+      <div className="mt-7">
+        <Comment
+          threadId={thread.id}
+          currentUserImg={user.imageUrrl}
+          currentUserId={JSON.stringify(userInfo._id)}
         />
       </div>
     </section>
