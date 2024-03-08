@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import TreadCard from "@/components/cards/TreadCard";
 import { fetchUser } from "@/lib/actions/user.actions";
-import { findThreadById } from "@/lib/actions/thread.actions";
+import { fetchThreadById } from "@/lib/actions/thread.actions";
 import Comment from "@/components/forms/Comment";
 
 const Page = async ({ params }: { params: { id: string } }) => {
@@ -13,17 +13,18 @@ const Page = async ({ params }: { params: { id: string } }) => {
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("onboarding");
+  // console.log("🚀 ~ Page ~ userInfo:", !userInfo.onboarded);
+  if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const thread = await findThreadById(params.id);
+  const thread = await fetchThreadById(params.id);
 
   return (
     <section className="relative">
       <div>
         <TreadCard
-          key={thread._id}
+          // key={thread._id}
           id={thread._id}
-          currentUserId={thread?.id || ""}
+          currentUserId={user.id}
           parentId={thread.parentId}
           content={thread.text}
           author={thread.author}
@@ -35,18 +36,19 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
       <div className="mt-7">
         <Comment
-          threadId={thread.id}
-          currentUserImg={userInfo.image}
+          threadId={params.id}
+          currentUserImg={user.imageUrl}
           currentUserId={JSON.stringify(userInfo._id)}
         />
       </div>
 
       <div className="mt-10">
         {thread.children.map((children: any) => (
+          // console.log(children.author._id)
           <TreadCard
             key={children._id}
             id={children._id}
-            currentUserId={children?.id || ""}
+            currentUserId={user.id}
             parentId={children.parentId}
             content={children.text}
             author={children.author}

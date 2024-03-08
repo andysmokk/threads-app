@@ -38,6 +38,7 @@ const TreadCard = ({
   comments,
   isComment,
 }: Props) => {
+  console.log("🚀 ~ author:", author);
   return (
     <article
       className={`flex w-full flex-col rounded-xl 
@@ -59,6 +60,7 @@ const TreadCard = ({
           </div>
 
           <div className="flex w-full flex-col">
+            {/* {console.log("id", author.id)} */}
             <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="cursor =-pointer text-base-semibold text-light-1">
                 {author.name}

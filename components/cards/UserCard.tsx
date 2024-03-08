@@ -15,6 +15,7 @@ interface Props {
 }
 
 const UserCard = ({ key, id, name, username, imgUrl, personType }: Props) => {
+  console.log("🚀 ~ UserCard ~ id:", id);
   const router = useRouter();
 
   return (
