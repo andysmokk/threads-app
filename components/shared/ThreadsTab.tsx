@@ -15,11 +15,14 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
 
   if (accountType === "Community") {
     result = await fetchCommunityPosts(accountId);
+    console.log("🚀 ~ ThreadsTab ~ result:", result);
   } else {
     result = await fetchUserPosts(accountId);
   }
 
   if (!result) redirect("/");
+
+  const com = result.threads.map((thread: any) => console.log(thread));
 
   return (
     <section className="mt-9 flex flex-col gap-10">
@@ -39,7 +42,11 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
                   id: thread.author.id,
                 }
           }
-          community={thread.community}
+          community={
+            accountType === "Community"
+              ? { name: result.name, id: result.id, image: result.image }
+              : thread.community
+          }
           createdAt={thread.createdAt}
           comments={thread.children}
         />
