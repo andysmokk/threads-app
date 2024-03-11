@@ -38,7 +38,7 @@ const TreadCard = ({
   comments,
   isComment,
 }: Props) => {
-  console.log("🚀 ~ author:", author);
+  console.log("🚀 ~ community1:", community);
   return (
     <article
       className={`flex w-full flex-col rounded-xl 
@@ -60,7 +60,6 @@ const TreadCard = ({
           </div>
 
           <div className="flex w-full flex-col">
-            {/* {console.log("id", author.id)} */}
             <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="cursor =-pointer text-base-semibold text-light-1">
                 {author.name}
@@ -116,6 +115,28 @@ const TreadCard = ({
           </div>
         </div>
       </div>
+
+      {!isComment && comments.length > 0 && (
+        <div className="ml-2.5 mt-3 flex items-center gap-2">
+          {comments.map((comment, index) => (
+            <Image
+              key={index}
+              src={comment.author.image}
+              alt={`user_${index}`}
+              width={24}
+              height={24}
+              className={`${index !== 0 && "-ml-5"} rounded-full object-cover gap-0 activity-user-img`}
+            />
+          ))}
+
+          <Link href={`/thread/${id}`}>
+            <p className="mt-1 text-subtle-medium text-gray-1">
+              {comments.length} repl{comments.length === 1 ? "y" : "ies"}
+            </p>
+          </Link>
+        </div>
+      )}
+
       {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}

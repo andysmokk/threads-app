@@ -9,10 +9,12 @@ import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 import UserCard from "@/components/cards/UserCard";
 
 const Page = async ({ params }: { params: { id: string } }) => {
+  console.log("🚀 ~ Page ~ params:", params.id);
   const user = await currentUser();
   if (!user) return null;
 
   const communityDetails = await fetchCommunityDetails(params.id);
+  console.log("🚀 ~ Page ~ communityDetails:", communityDetails);
 
   return (
     <section>
