@@ -50,7 +50,7 @@ const TreadCard = ({
             <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
               <Image
                 src={author.image}
-                alt="Profile image"
+                alt="User Community Image"
                 fill
                 className="cursor-pointer rounded-full"
               />
@@ -61,7 +61,7 @@ const TreadCard = ({
 
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author.id}`} className="w-fit">
-              <h4 className="cursor =-pointer text-base-semibold text-light-1">
+              <h4 className="cursor-pointer text-base-semibold text-light-1">
                 {author.name}
               </h4>
             </Link>
@@ -157,7 +157,7 @@ const TreadCard = ({
             alt={community.name}
             width={14}
             height={14}
-            className="mt-0.5 ml-1 rounded-full object-cover"
+            className="mt-0.5 ml-1 rounded-full object-cover activity-user-img"
           />
         </Link>
       )}
