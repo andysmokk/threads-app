@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { formatDateString } from "@/lib/utils";
+import DeleteThread from "../forms/DeleteThread";
 
 interface Props {
   id: string;
@@ -38,7 +39,6 @@ const TreadCard = ({
   comments,
   isComment,
 }: Props) => {
-  console.log("🚀 ~ community1:", community);
   return (
     <article
       className={`flex w-full flex-col rounded-xl 
@@ -115,6 +115,14 @@ const TreadCard = ({
           </div>
         </div>
       </div>
+
+      <DeleteThread
+        threadId={JSON.stringify(id)}
+        currentUserId={currentUserId}
+        authorId={author.id}
+        parentId={parentId}
+        isComment={isComment}
+      />
 
       {!isComment && comments.length > 0 && (
         <div className="ml-2.5 mt-3 flex items-center gap-2">
