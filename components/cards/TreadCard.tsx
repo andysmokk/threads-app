@@ -77,7 +77,6 @@ const TreadCard = ({
                   height={24}
                   className="cursor-pointer object-contain"
                 />
-
                 <Link href={`/thread/${id}`}>
                   <Image
                     src="/assets/reply.svg"
@@ -87,7 +86,6 @@ const TreadCard = ({
                     className="cursor-pointer object-contain"
                   />
                 </Link>
-
                 <Image
                   src="/assets/repost.svg"
                   alt="repost"
@@ -107,22 +105,22 @@ const TreadCard = ({
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} replies
+                    {comments.length} repl{comments.length === 1 ? "y" : "ies"}
                   </p>
                 </Link>
               )}
             </div>
           </div>
         </div>
-      </div>
 
-      <DeleteThread
-        threadId={JSON.stringify(id)}
-        currentUserId={currentUserId}
-        authorId={author.id}
-        parentId={parentId}
-        isComment={isComment}
-      />
+        <DeleteThread
+          threadId={JSON.stringify(id)}
+          currentUserId={currentUserId}
+          authorId={author.id}
+          parentId={parentId}
+          isComment={isComment}
+        />
+      </div>
 
       {!isComment && comments.length > 0 && (
         <div className="ml-2.5 mt-3 flex items-center gap-2">
