@@ -47,9 +47,12 @@ const TreadCard = ({
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+            <Link
+              href={`/profile/${author?.id}`}
+              className="relative h-11 w-11"
+            >
               <Image
-                src={author.image}
+                src={author?.image}
                 alt="User Community Image"
                 fill
                 className="cursor-pointer rounded-full"
@@ -60,9 +63,9 @@ const TreadCard = ({
           </div>
 
           <div className="flex w-full flex-col">
-            <Link href={`/profile/${author.id}`} className="w-fit">
+            <Link href={`/profile/${author?.id}`} className="w-fit">
               <h4 className="cursor-pointer text-base-semibold text-light-1">
-                {author.name}
+                {author?.name}
               </h4>
             </Link>
 
@@ -116,13 +119,13 @@ const TreadCard = ({
         <DeleteThread
           threadId={JSON.stringify(id)}
           currentUserId={currentUserId}
-          authorId={author.id}
+          authorId={author?.id}
           parentId={parentId}
           isComment={isComment}
         />
       </div>
 
-      {!isComment && comments.length > 0 && (
+      {!isComment && comments?.length > 0 && (
         <div className="ml-2.5 mt-3 flex items-center gap-2">
           {comments.map((comment, index) => (
             <Image

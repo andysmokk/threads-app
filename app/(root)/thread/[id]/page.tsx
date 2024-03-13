@@ -22,15 +22,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
     <section className="relative">
       <div>
         <TreadCard
-          // key={thread._id}
-          id={thread._id}
+          key={thread?._id}
+          id={thread?._id}
           currentUserId={user.id}
-          parentId={thread.parentId}
-          content={thread.text}
-          author={thread.author}
-          community={thread.community}
-          createdAt={thread.createdAt}
-          comments={thread.children}
+          parentId={thread?.parentId}
+          content={thread?.text}
+          author={thread?.author}
+          community={thread?.community}
+          createdAt={thread?.createdAt}
+          comments={thread?.children}
         />
       </div>
 
@@ -43,7 +43,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
 
       <div className="mt-10">
-        {thread.children.map((children: any) => (
+        {thread?.children.map((children: any) => (
           // console.log(children.author._id)
           <TreadCard
             key={children._id}
