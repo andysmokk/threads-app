@@ -8,6 +8,7 @@ import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 // import { profileTabs } from "@/constants";
 // import ThreadsTab from "@/components/shared/ThreadsTab";
 import UserCard from "@/components/cards/UserCard";
+import Searchbar from "@/components/shared/Searchbar";
 
 const Page = async () => {
   const user = await currentUser();
@@ -25,7 +26,9 @@ const Page = async () => {
 
   return (
     <section>
-      <h1 className="mt-10 head-text">Search</h1>
+      <h1 className="mb-10 head-text">Search</h1>
+
+      <Searchbar routeType="search" />
 
       <div className="mt-14 flex flex-col gap-9">
         {result.users.length === 0 ? (
