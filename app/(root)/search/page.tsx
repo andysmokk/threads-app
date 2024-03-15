@@ -10,7 +10,11 @@ import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 import UserCard from "@/components/cards/UserCard";
 import Searchbar from "@/components/shared/Searchbar";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const user = await currentUser();
   if (!user) return null;
 
@@ -19,7 +23,7 @@ const Page = async () => {
 
   const result = await fetchUsers({
     userId: user.id,
-    searchString: "",
+    searchString: searchParams.q,
     pageNumber: 1,
     pageSize: 25,
   });
