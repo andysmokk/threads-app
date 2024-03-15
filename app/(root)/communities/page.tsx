@@ -2,11 +2,15 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { fetchUser } from "@/lib/actions/user.actions";
-import UserCard from "@/components/cards/UserCard";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import CommunityCard from "@/components/cards/CommunityCard";
+import Searchbar from "@/components/shared/Searchbar";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const user = await currentUser();
   if (!user) return null;
 
@@ -14,18 +18,20 @@ const Page = async () => {
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const result = await fetchCommunities({
-    searchString: "",
+    searchString: searchParams.q,
     pageNumber: 1,
     pageSize: 25,
   });
 
   return (
     <section>
-      <h1 className="mt-10 head-text">Search</h1>
+      <h1 className="mb-10 head-text">Search</h1>
+
+      <Searchbar routeType="communities" />
 
       <div className="mt-14 flex flex-col gap-9">
         {result.communities.length === 0 ? (
-          <p className="no-result">No users</p>
+          <p className="no-result">No communities</p>
         ) : (
           <>
             {result.communities.map((community) => (
