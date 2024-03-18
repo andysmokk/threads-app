@@ -127,14 +127,15 @@ const TreadCard = ({
 
       {!isComment && comments?.length > 0 && (
         <div className="ml-2.5 mt-3 flex items-center gap-2">
-          {comments.map((comment, index) => (
+          {comments.slice(0, 3).map((comment, index) => (
             <Image
               key={index}
               src={comment.author.image}
               alt={`user_${index}`}
               width={24}
               height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover gap-0 activity-user-img`}
+              className={`${index !== 0 && "-ml-5"} rounded-full object-cover 
+              gap-0 activity-user-img`}
             />
           ))}
 
