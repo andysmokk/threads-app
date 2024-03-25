@@ -6,6 +6,7 @@ import { connectToDB } from "../mongoose";
 
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
+
 import Community from "../models/community.model";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
@@ -240,5 +241,75 @@ export async function addCommentToThread(
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+export async function fetchReactions(
+  threadId: string
+  // userId: string
+  // path: string
+) {
+  try {
+    connectToDB();
+
+    const thread = await Thread.findById(threadId).populate({
+      path: "likes",
+      model: Thread,
+    });
+
+    const countLikes = thread.likes.length;
+
+    return countLikes;
+  } catch (err) {
+    console.error(" :", err);
+    throw new Error(" ");
+  }
+}
+
+export async function createReaction(
+  threadId: string,
+  userId: string
+  // path: string
+) {
+  console.log("🚀 ~ userId:", userId);
+  console.log("🚀 ~ userId:", userId);
+  try {
+    connectToDB();
+
+    const thread = await Thread.findOne({ id: userId })
+      // .populate({
+      //   path: "likes.user",
+      //   select: "id username name image", // Обережніше вибрати лише необхідні поля
+      // })
+      .exec();
+
+    console.log("🚀 ~ thread:", thread);
+
+    // const likeIndex = thread.likes.findIndex(
+    //   (like: any) => like.user.toString() === userId
+    // );
+    // console.log("🚀 ~ likeIndex:", likeIndex);
+
+    // const currentUser = await User.findById(userId).populate("likes");
+    // console.log("🚀 ~ currentUser:", currentUser);
+    // const thread = await Thread.findOneAndUpdate({ threadId }).populate({
+    //   path: "likes",
+    //   model: Thread,
+    // });
+    // console.log("🚀 ~ thread ~ thread:", thread);
+
+    // await Thread.findByIdAndUpdate(threadId, {
+    //   $push: { likes: userId },
+    // });
+
+    // await User.findByIdAndUpdate(author, {
+    //   $push: { threads: createdThread._id },
+    // });
+    // const countLikes = thread.likes.length;
+
+    // return countLikes;
+  } catch (err) {
+    console.error(" :", err);
+    throw new Error(" ");
   }
 }

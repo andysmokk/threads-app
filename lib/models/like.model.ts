@@ -11,6 +11,10 @@ const likeSchema = new mongoose.Schema({
     ref: "Thread",
     required: true,
   },
+  likeCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Like = mongoose.models.Like || mongoose.model("Like", likeSchema);

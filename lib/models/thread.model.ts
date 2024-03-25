@@ -18,6 +18,19 @@ const threadSchema = new mongoose.Schema({
   parentId: {
     type: String,
   },
+  likes: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   children: [
     {
       type: mongoose.Schema.Types.ObjectId,

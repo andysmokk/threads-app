@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import ReactionThread from "../reactions/ReactionThread";
 
 interface Props {
   id: string;
@@ -104,6 +105,12 @@ const TreadCard = ({
                   className="cursor-pointer object-contain"
                 />
               </div>
+
+              <ReactionThread
+                threadId={id}
+                userId={currentUserId}
+                isLiked={false}
+              />
 
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
