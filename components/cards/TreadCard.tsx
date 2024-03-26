@@ -5,6 +5,8 @@ import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import ReactionThread from "../reactions/ReactionThread";
 
+import mongoose from "mongoose";
+
 interface Props {
   id: string;
   currentUserId: string;
@@ -40,6 +42,11 @@ const TreadCard = ({
   comments,
   isComment,
 }: Props) => {
+  console.log("🚀 ~ currentUserId:", currentUserId);
+  // console.log("🚀 ~ author:", author);
+  // const objectId = new mongoose.Types.ObjectId(author._id);
+  // console.log("🚀 ~ objectId:", objectId);
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl 
@@ -109,6 +116,7 @@ const TreadCard = ({
               <ReactionThread
                 threadId={id}
                 userId={currentUserId}
+                // authorId={objectId}
                 isLiked={false}
               />
 

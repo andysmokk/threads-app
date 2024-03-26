@@ -7,6 +7,7 @@ import { createReaction } from "@/lib/actions/thread.actions";
 interface Props {
   threadId: string;
   userId: string;
+  // authorId: string;
   isLiked: boolean;
 }
 

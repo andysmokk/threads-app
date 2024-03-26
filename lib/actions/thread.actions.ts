@@ -8,6 +8,7 @@ import User from "../models/user.model";
 import Thread from "../models/thread.model";
 
 import Community from "../models/community.model";
+import { Types } from "mongoose";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -269,45 +270,50 @@ export async function fetchReactions(
 export async function createReaction(
   threadId: string,
   userId: string
+  // authorId: string
   // path: string
 ) {
-  console.log("🚀 ~ userId:", userId);
-  console.log("🚀 ~ userId:", userId);
+  console.log("🚀 ~ threadId:", threadId);
+  // console.log("🚀 ~ authorId:", authorId);
+  // console.log("🚀 ~ userId:", userId);
   try {
     connectToDB();
 
-    const thread = await Thread.findOne({ id: userId })
-      // .populate({
-      //   path: "likes.user",
-      //   select: "id username name image", // Обережніше вибрати лише необхідні поля
-      // })
-      .exec();
+    const currentUser = await User.findOne({ id: userId });
+    console.log("🚀 ~ currentUser:", currentUser._id.toString());
+    const thread = await Thread.findById(threadId);
+    // console.log("🚀 ~ thread:", thread);
+
+    const existingLike = thread.likes.find(
+      (like: any) => like.user.toString() === currentUser._id.toString()
+    );
+    console.log("🚀 ~ existingLike:", existingLike);
+
+    if (existingLike) {
+      const likeIndex = thread.likes.indexOf(existingLike);
+      thread.likes.splice(likeIndex, 1);
+    } else {
+      // Інакше створюйте новий лайк
+      const like = {
+        user: new Types.ObjectId(currentUser._id),
+        createdAt: new Date(),
+      };
+      thread.likes.push(like);
+    }
+
+    await thread.save();
 
     console.log("🚀 ~ thread:", thread);
+    // const like = {
+    //   user: new Types.ObjectId(authorId),
+    //   createdAt: new Date(),
+    // };
 
-    // const likeIndex = thread.likes.findIndex(
-    //   (like: any) => like.user.toString() === userId
+    // const thread = await Thread.findOneAndUpdate(
+    //   { id: userId },
+    //   { $push: { likes: like } },
+    //   { new: true }
     // );
-    // console.log("🚀 ~ likeIndex:", likeIndex);
-
-    // const currentUser = await User.findById(userId).populate("likes");
-    // console.log("🚀 ~ currentUser:", currentUser);
-    // const thread = await Thread.findOneAndUpdate({ threadId }).populate({
-    //   path: "likes",
-    //   model: Thread,
-    // });
-    // console.log("🚀 ~ thread ~ thread:", thread);
-
-    // await Thread.findByIdAndUpdate(threadId, {
-    //   $push: { likes: userId },
-    // });
-
-    // await User.findByIdAndUpdate(author, {
-    //   $push: { threads: createdThread._id },
-    // });
-    // const countLikes = thread.likes.length;
-
-    // return countLikes;
   } catch (err) {
     console.error(" :", err);
     throw new Error(" ");
