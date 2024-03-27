@@ -11,7 +11,7 @@ interface Props {
   isLiked: boolean;
 }
 
-const ReactionThread = async ({ threadId, userId, isLiked }: Props) => {
+const ReactionThread = async ({ threadId, userId, isLiked = true }: Props) => {
   const handleClick = async () => {
     await createReaction(threadId, userId);
   };

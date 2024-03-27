@@ -275,14 +275,14 @@ export async function createReaction(
 ) {
   console.log("🚀 ~ threadId:", threadId);
   // console.log("🚀 ~ authorId:", authorId);
-  // console.log("🚀 ~ userId:", userId);
+  console.log("🚀 ~ userId:", userId);
   try {
     connectToDB();
 
     const currentUser = await User.findOne({ id: userId });
     console.log("🚀 ~ currentUser:", currentUser._id.toString());
     const thread = await Thread.findById(threadId);
-    // console.log("🚀 ~ thread:", thread);
+    console.log("🚀 ~ thread:", thread);
 
     const existingLike = thread.likes.find(
       (like: any) => like.user.toString() === currentUser._id.toString()
@@ -290,32 +290,36 @@ export async function createReaction(
     console.log("🚀 ~ existingLike:", existingLike);
 
     if (existingLike) {
-      const likeIndex = thread.likes.indexOf(existingLike);
-      thread.likes.splice(likeIndex, 1);
+      // delete a like if it exist
+      await Thread.updateOne(
+        { _id: new Types.ObjectId(threadId) },
+        { $pull: { likes: { user: new Types.ObjectId(currentUser._id) } } }
+      );
     } else {
-      // Інакше створюйте новий лайк
-      const like = {
-        user: new Types.ObjectId(currentUser._id),
-        createdAt: new Date(),
-      };
-      thread.likes.push(like);
+      // add a like
+      await Thread.updateOne(
+        { _id: new Types.ObjectId(threadId) },
+        { $push: { likes: { user: new Types.ObjectId(currentUser._id) } } }
+      );
     }
 
-    await thread.save();
+    // if (existingLike) {
+    //   const likeIndex = thread.likes.indexOf(existingLike);
+    //   thread.likes.splice(likeIndex, 1);
+    // } else {
+    //   // Інакше створюйте новий лайк
+    //   const like = {
+    //     user: new Types.ObjectId(currentUser._id),
+    //     createdAt: new Date(),
+    //   };
+    //   thread.likes.push(like);
+    // }
 
-    console.log("🚀 ~ thread:", thread);
-    // const like = {
-    //   user: new Types.ObjectId(authorId),
-    //   createdAt: new Date(),
-    // };
+    // await thread.save();
 
-    // const thread = await Thread.findOneAndUpdate(
-    //   { id: userId },
-    //   { $push: { likes: like } },
-    //   { new: true }
-    // );
+    console.log("🚀 ~ thread2:", thread);
   } catch (err) {
-    console.error(" :", err);
-    throw new Error(" ");
+    console.error("Error while creating reaction:", err);
+    throw new Error("Unable to create reaction");
   }
 }
