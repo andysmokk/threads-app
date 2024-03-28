@@ -117,7 +117,7 @@ const TreadCard = ({
                 threadId={id}
                 userId={currentUserId}
                 // authorId={objectId}
-                isLiked={false}
+                // isLiked={false}
               />
 
               {isComment && comments.length > 0 && (
