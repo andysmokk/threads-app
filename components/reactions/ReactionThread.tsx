@@ -13,6 +13,7 @@ interface Props {
 
 const ReactionThread = ({ threadId, userId }: Props) => {
   const [likeCount, setLikeCount] = useState(0);
+  console.log("🚀 ~ ReactionThread ~ likeCount:", likeCount);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,8 @@ const ReactionThread = ({ threadId, userId }: Props) => {
 
   const handleClick = async () => {
     await createReaction(threadId, userId);
+    const updatedLikeCount = await fetchReactions(threadId);
+    setLikeCount(updatedLikeCount);
   };
 
   return (
