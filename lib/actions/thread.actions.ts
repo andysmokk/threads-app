@@ -273,16 +273,16 @@ export async function createReaction(
   // authorId: string
   // path: string
 ) {
-  console.log("🚀 ~ threadId:", threadId);
+  // console.log("🚀 ~ threadId:", threadId);
   // console.log("🚀 ~ authorId:", authorId);
-  console.log("🚀 ~ userId:", userId);
+  // console.log("🚀 ~ userId:", userId);
   try {
     connectToDB();
 
     const currentUser = await User.findOne({ id: userId });
-    console.log("🚀 ~ currentUser:", currentUser._id.toString());
+    // console.log("🚀 ~ currentUser:", currentUser._id.toString());
     const thread = await Thread.findById(threadId);
-    console.log("🚀 ~ thread:", thread);
+    // console.log("🚀 ~ thread:", thread);
 
     const existingLike = thread.likes.find(
       (like: any) => like.user.toString() === currentUser._id.toString()
@@ -317,7 +317,35 @@ export async function createReaction(
 
     // await thread.save();
 
-    console.log("🚀 ~ thread2:", thread);
+    // console.log("🚀 ~ thread2:", thread);
+  } catch (err) {
+    console.error("Error while creating reaction:", err);
+    throw new Error("Unable to create reaction");
+  }
+}
+
+export async function getReactionOfUser(
+  threadId: string,
+  userId: string
+  // authorId: string
+  // path: string
+) {
+  try {
+    connectToDB();
+
+    const currentUser = await User.findOne({ id: userId });
+
+    const thread = await Thread.findById(threadId);
+    //   .populate({
+    //   path: "likes",
+    //   model: Thread,
+    // });
+
+    const isLiked = thread.likes.some(
+      (like: any) => like.user.toString() === currentUser._id.toString()
+    );
+
+    return isLiked;
   } catch (err) {
     console.error("Error while creating reaction:", err);
     throw new Error("Unable to create reaction");

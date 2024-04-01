@@ -5,7 +5,7 @@ import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import ReactionThread from "../reactions/ReactionThread";
 
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
 interface Props {
   id: string;
