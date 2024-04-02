@@ -4,6 +4,7 @@ import Image from "next/image";
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import ReactionThread from "../reactions/ReactionThread";
+import EditThread from "../forms/EditThread";
 
 // import mongoose from "mongoose";
 
@@ -138,6 +139,8 @@ const TreadCard = ({
           parentId={parentId}
           isComment={isComment}
         />
+
+        <EditThread/>
       </div>
 
       {!isComment && comments?.length > 0 && (
