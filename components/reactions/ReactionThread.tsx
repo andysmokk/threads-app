@@ -9,6 +9,8 @@ import {
   getReactionOfUser,
 } from "@/lib/actions/thread.actions";
 
+import { usePathname } from "next/navigation";
+
 interface Props {
   threadId: string;
   userId: string;
@@ -16,31 +18,33 @@ interface Props {
 }
 
 const ReactionThread = ({ threadId, userId }: Props) => {
-  const [likeCount, setLikeCount] = useState(0);
+  // const [likeCount, setLikeCount] = useState(0);
   const [likeOfUser, setLikeOfUser] = useState(false);
   // console.log("🚀 ~ ReactionThread ~ likeOfUser:", likeOfUser);
   // console.log("🚀 ~ ReactionThread ~ likeOfUser:", likeOfUser);
 
   // console.log("🚀 ~ ReactionThread ~ likeCount:", likeCount);
+  const pathname = usePathname();
+  console.log("🚀 ~ ReactionThread ~ pathname:", pathname);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const countLikes = await fetchReactions(threadId);
-      setLikeCount(countLikes);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const countLikes = await fetchReactions({ threadId, path: pathname });
+  //     setLikeCount(countLikes);
 
-      // const isLiked = await getReactionOfUser(threadId, userId);
-      // setLikeOfUser(isLiked);
-    };
+  //     // const isLiked = await getReactionOfUser(threadId, userId);
+  //     // setLikeOfUser(isLiked);
+  //   };
 
-    // const isLikedOfCurrentUser = async () => {
-    //   const isLiked = await getReactionOfUser(threadId, userId);
-    //   console.log("🚀 ~ isLikedOfCurrentUser ~ isLiked:", isLiked);
-    //   setLikeOfUser(isLiked);
-    // };
+  //   // const isLikedOfCurrentUser = async () => {
+  //   //   const isLiked = await getReactionOfUser(threadId, userId);
+  //   //   console.log("🚀 ~ isLikedOfCurrentUser ~ isLiked:", isLiked);
+  //   //   setLikeOfUser(isLiked);
+  //   // };
 
-    // isLikedOfCurrentUser();
-    fetchData();
-  }, [threadId]);
+  //   // isLikedOfCurrentUser();
+  //   fetchData();
+  // }, [threadId, pathname]);
 
   useEffect(() => {
     const fetchLikeOfUser = async () => {
@@ -54,8 +58,8 @@ const ReactionThread = ({ threadId, userId }: Props) => {
 
   const handleClick = async () => {
     await createReaction(threadId, userId);
-    const updatedLikeCount = await fetchReactions(threadId);
-    setLikeCount(updatedLikeCount);
+    await fetchReactions({ threadId, path: pathname });
+    // setLikeCount(updatedLikeCount);
 
     // const updatedLikeOfUser = !likeOfUser;
     // setLikeOfUser(updatedLikeOfUser);
@@ -63,7 +67,7 @@ const ReactionThread = ({ threadId, userId }: Props) => {
   };
 
   return (
-    <div>
+    <>
       <Image
         src={`/assets/heart-${likeOfUser ? "filled" : "gray"}.svg`}
         alt="heart"
@@ -72,8 +76,8 @@ const ReactionThread = ({ threadId, userId }: Props) => {
         onClick={handleClick}
         className="cursor-pointer"
       />
-      <span>{likeCount}</span>
-    </div>
+      {/* <span>{likeCount}</span> */}
+    </>
   );
 };
 

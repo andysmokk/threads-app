@@ -246,7 +246,7 @@ export async function addCommentToThread(
 }
 
 export async function fetchReactions(
-  threadId: string
+  { threadId, path }: { threadId: string; path: string }
   // userId: string
   // path: string
 ) {
@@ -259,6 +259,8 @@ export async function fetchReactions(
     });
 
     const countLikes = thread.likes.length;
+
+    revalidatePath(path);
 
     return countLikes;
   } catch (err) {
