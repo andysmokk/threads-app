@@ -45,7 +45,11 @@ const ReactionThread = ({ threadId, userId }: Props) => {
 
   useEffect(() => {
     const fetchLikeOfUser = async () => {
-      const isLiked = await getReactionOfUser(threadId, userId);
+      const isLiked = await getReactionOfUser({
+        threadId,
+        userId,
+        // path: pathname,
+      });
       console.log("🚀 ~ fetchLikeOfUser ~ isLiked:", isLiked);
       setLikeOfUser(isLiked);
     };
@@ -54,8 +58,8 @@ const ReactionThread = ({ threadId, userId }: Props) => {
   }, [threadId, userId]);
 
   const handleClick = async () => {
-    await createReaction(threadId, userId);
-    await fetchReactions({ threadId, path: pathname });
+    await createReaction({ threadId, userId, path: pathname });
+    await fetchReactions({ threadId });
     // setLikeCount(updatedLikeCount);
 
     // const updatedLikeOfUser = !likeOfUser;

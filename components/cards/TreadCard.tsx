@@ -156,49 +156,51 @@ const TreadCard = ({
         <EditThread />
       </div>
 
-      {!isComment && comments?.length > 0 && (
-        <div className="ml-2.5 mt-3 flex items-center gap-2">
-          {comments.slice(0, 3).map((comment, index) => (
-            <Image
-              key={index}
-              src={comment.author.image}
-              alt={`user_${index}`}
-              width={24}
-              height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover 
+      <div className="flex gap-1">
+        {!isComment && comments?.length > 0 && (
+          <div className="ml-2.5 mt-3 flex items-center gap-2">
+            {comments.slice(0, 3).map((comment, index) => (
+              <Image
+                key={index}
+                src={comment.author.image}
+                alt={`user_${index}`}
+                width={24}
+                height={24}
+                className={`${index !== 0 && "-ml-5"} rounded-full object-cover 
               gap-0 activity-user-img`}
-            />
-          ))}
+              />
+            ))}
 
-          <Link href={`/thread/${id}`}>
-            <p className="mt-1 text-subtle-medium text-gray-1">
-              {comments.length} repl{comments.length === 1 ? "y" : "ies"}
-            </p>
-          </Link>
-        </div>
-      )}
+            <Link href={`/thread/${id}`}>
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {comments.length} repl{comments.length === 1 ? "y" : "ies"}
+              </p>
+            </Link>
+          </div>
+        )}
 
-      {likes && likes?.length > 0 && (
-        <div className="ml-2.5 mt-3 flex items-center gap-2">
-          {likes.slice(0, 3).map((like, index) => (
-            <Image
-              key={index}
-              src={like?.user.image}
-              alt={`user_${index}`}
-              width={24}
-              height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover 
+        {likes && likes?.length > 0 && (
+          <div className="ml-2.5 mt-3 flex items-center gap-2">
+            {likes.slice(0, 3).map((like, index) => (
+              <Image
+                key={index}
+                src={like?.user.image}
+                alt={`user_${index}`}
+                width={24}
+                height={24}
+                className={`${index !== 0 && "-ml-5"} rounded-full object-cover 
               gap-0 activity-user-img`}
-            />
-          ))}
+              />
+            ))}
 
-          <Link href={`/thread/${id}`}>
-            <p className="mt-1 text-subtle-medium text-gray-1">
-              {likes.length} lik{likes.length === 1 ? "e" : "es"}
-            </p>
-          </Link>
-        </div>
-      )}
+            <Link href={`/thread/${id}`}>
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {likes.length} lik{likes.length === 1 ? "e" : "es"}
+              </p>
+            </Link>
+          </div>
+        )}
+      </div>
 
       {!isComment && community && (
         <Link

@@ -255,7 +255,7 @@ export async function addCommentToThread(
 }
 
 export async function fetchReactions(
-  { threadId, path }: { threadId: string; path: string }
+  { threadId }: { threadId: string }
   // userId: string
   // path: string
 ) {
@@ -269,7 +269,7 @@ export async function fetchReactions(
 
     const countLikes = thread.likes.length;
 
-    revalidatePath(path);
+    // revalidatePath(path);
 
     return countLikes;
   } catch (err) {
@@ -279,8 +279,9 @@ export async function fetchReactions(
 }
 
 export async function createReaction(
-  threadId: string,
-  userId: string
+  { threadId, userId, path }: { threadId: string; userId: string; path: string }
+  // threadId: string,
+  // userId: string
   // authorId: string
   // path: string
 ) {
@@ -327,6 +328,7 @@ export async function createReaction(
     // }
 
     // await thread.save();
+    revalidatePath(path);
 
     // console.log("🚀 ~ thread2:", thread);
   } catch (err) {
@@ -336,8 +338,10 @@ export async function createReaction(
 }
 
 export async function getReactionOfUser(
-  threadId: string,
-  userId: string
+  { threadId, userId }: { threadId: string; userId: string }
+
+  // threadId: string,
+  // userId: string
   // authorId: string
   // path: string
 ) {
@@ -356,6 +360,7 @@ export async function getReactionOfUser(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
     console.log("🚀 ~ isLiked:", isLiked);
+    // revalidatePath(path);
 
     return isLiked;
   } catch (err) {
