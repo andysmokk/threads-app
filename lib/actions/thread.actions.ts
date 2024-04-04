@@ -30,6 +30,15 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       model: Community,
     })
     .populate({
+      path: "likes",
+      model: Thread,
+      populate: {
+        path: "user",
+        model: User,
+        select: "image", // Select the "name" and "_id" fields from the "User" model
+      },
+    })
+    .populate({
       path: "children", // Populate the children field
       populate: {
         path: "author", // Populate the author field within children
@@ -289,7 +298,7 @@ export async function createReaction(
     const existingLike = thread.likes.find(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
-    console.log("🚀 ~ existingLike:", existingLike);
+    // console.log("🚀 ~ existingLike:", existingLike);
 
     if (existingLike) {
       // delete a like if it exist
@@ -346,6 +355,7 @@ export async function getReactionOfUser(
     const isLiked = thread.likes.some(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
+    console.log("🚀 ~ isLiked:", isLiked);
 
     return isLiked;
   } catch (err) {

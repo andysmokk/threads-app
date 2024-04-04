@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   createReaction,
@@ -21,11 +21,8 @@ const ReactionThread = ({ threadId, userId }: Props) => {
   // const [likeCount, setLikeCount] = useState(0);
   const [likeOfUser, setLikeOfUser] = useState(false);
   // console.log("🚀 ~ ReactionThread ~ likeOfUser:", likeOfUser);
-  // console.log("🚀 ~ ReactionThread ~ likeOfUser:", likeOfUser);
 
-  // console.log("🚀 ~ ReactionThread ~ likeCount:", likeCount);
   const pathname = usePathname();
-  console.log("🚀 ~ ReactionThread ~ pathname:", pathname);
 
   // useEffect(() => {
   //   const fetchData = async () => {

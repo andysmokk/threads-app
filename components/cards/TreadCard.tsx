@@ -49,8 +49,8 @@ const TreadCard = ({
   isComment,
   likes,
 }: Props) => {
-  console.log("🚀 ~ likes:", likes);
-  console.log("🚀 ~ currentUserId:", currentUserId);
+  // console.log("🚀 ~ likes:", likes);
+  // console.log("🚀 ~ currentUserId:", currentUserId);
   // console.log("🚀 ~ author:", author);
   // const objectId = new mongoose.Types.ObjectId(author._id);
   // console.log("🚀 ~ objectId:", objectId);
