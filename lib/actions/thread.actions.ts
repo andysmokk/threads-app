@@ -35,7 +35,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       populate: {
         path: "user",
         model: User,
-        select: "image", // Select the "name" and "_id" fields from the "User" model
+        select: "image", // Select the "image" field from the "User" model
       },
     })
     .populate({
@@ -187,6 +187,15 @@ export async function fetchThreadById(threadId: string) {
         model: Community,
         select: "_id id name image",
       }) // Populate the community field with _id and name
+      .populate({
+        path: "likes",
+        model: Thread,
+        populate: {
+          path: "user",
+          model: User,
+          select: "image", // Select the "image" field from the "User" model
+        },
+      })
       .populate({
         path: "children", // Populate the children field
         populate: [
