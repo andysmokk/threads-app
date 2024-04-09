@@ -88,7 +88,10 @@ const TreadCard = ({
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-              <div className="flex gap-3.5 pb-5">
+              <div
+                className={`${isComment && "pb-0"} flex gap-3.5 pb-5`}
+                // className="flex gap-3.5 pb-5"
+              >
                 {/* <Image
                   src="/assets/heart-gray.svg"
                   alt="heart"
@@ -134,13 +137,37 @@ const TreadCard = ({
                 // isLiked={false}
               /> */}
 
-              {isComment && comments.length > 0 && (
+              <div className="flex flex-row gap-2">
+                {isComment && comments.length > 0 && (
+                  <Link href={`/thread/${id}`}>
+                    <p className="mt-1 text-subtle-medium text-gray-1">
+                      {comments.length} repl
+                      {comments.length === 1 ? "y" : "ies"}
+                    </p>
+                  </Link>
+                )}
+
+                {isComment && comments.length > 0 && likes.length > 0 && (
+                  <p className="mt-1 text-subtle-medium text-gray-1">•</p>
+                )}
+
+                {isComment && likes.length > 0 && (
+                  <Link href={`/thread/${id}`}>
+                    <p className="mt-1 text-subtle-medium text-gray-1">
+                      {likes.length} lik
+                      {likes.length === 1 ? "e" : "es"}
+                    </p>
+                  </Link>
+                )}
+              </div>
+
+              {/* {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length === 1 ? "y" : "ies"}
                   </p>
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -179,7 +206,7 @@ const TreadCard = ({
           </div>
         )}
 
-        {likes && likes?.length > 0 && (
+        {!isComment && likes && likes?.length > 0 && (
           <div className="ml-2.5 mt-3 flex items-center gap-2">
             {likes.slice(0, 3).map((like, index) => (
               <Image
