@@ -87,7 +87,7 @@ const TreadCard = ({
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
-            <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
+            <div className={`${isComment && "pb-10"} mt-5 flex flex-col gap-3`}>
               <div
                 className={`${isComment && "pb-0"} flex gap-3.5 pb-5`}
                 // className="flex gap-3.5 pb-5"
