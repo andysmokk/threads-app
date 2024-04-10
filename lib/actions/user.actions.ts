@@ -85,8 +85,18 @@ export const fetchUserPosts = async (userId: string) => {
             select: "name image id", // Select the "name" and "_id" fields from the "User" model
           },
         },
+        {
+          path: "likes",
+          model: Thread,
+          populate: {
+            path: "user",
+            model: User,
+            select: "image", // Select the "image" field from the "User" model
+          },
+        },
       ],
     });
+
     return threads;
   } catch (error) {
     console.error("Error fetching user threads:", error);
