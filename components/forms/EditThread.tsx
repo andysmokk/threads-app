@@ -7,18 +7,19 @@ import { usePathname, useRouter } from "next/navigation";
 interface Props {
   authorId: string;
   currentUserId: string;
+  threadId: string;
   // authorId: string;
   // parentId: string | null;
   // isComment?: boolean;
 }
 
-const EditThread = ({ authorId, currentUserId }: Props) => {
+const EditThread = ({ authorId, currentUserId, threadId }: Props) => {
   const pathname = usePathname();
 
   if (currentUserId !== authorId || pathname === "/") return null;
 
   return (
-    <Link href={""}>
+    <Link href={`/edit-thread/${threadId}`}>
       <Image
         src="/assets/edit.svg"
         alt="edit image"

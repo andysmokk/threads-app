@@ -18,22 +18,27 @@ import { useOrganization } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 
 import { ThreadValidation } from "@/lib/validations/thread";
-import { createThread } from "@/lib/actions/thread.actions";
+import { createThread, editThread } from "@/lib/actions/thread.actions";
+// import EditThread from "./EditThread";
 // import { updateUser } from "@/lib/actions/user.actions";
 
 interface Props {
-  user: {
-    id: string;
-    objectId: string;
-    name: string;
-    username: string;
-    bio: string;
-    image: string;
-  };
-  btnTitle: string;
+  userId: string;
+  textThread: string;
+  threadId: string;
+  // user: {
+  //   id: string;
+  //   objectId: string;
+  //   name: string;
+  //   username: string;
+  //   bio: string;
+  //   image: string;
+  // };
+  // btnTitle: string;
 }
 
-const PostThread = ({ userId }: { userId: string }) => {
+const PostThread = ({ userId, textThread, threadId }: Props) => {
+  // console.log("🚀 ~ PostThread ~ textThread:", textThread);
   const router = useRouter();
   const pathname = usePathname();
   const { organization } = useOrganization();
@@ -41,18 +46,26 @@ const PostThread = ({ userId }: { userId: string }) => {
   const form = useForm({
     resolver: zodResolver(ThreadValidation),
     defaultValues: {
-      thread: "",
+      thread: textThread || "",
       accountId: userId,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-    await createThread({
-      text: values.thread,
-      author: userId,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
+    if (textThread) {
+      await editThread({
+        text: values.thread,
+        threadId,
+        path: pathname,
+      });
+    } else {
+      await createThread({
+        text: values.thread,
+        author: userId,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
+    }
 
     router.push("/");
   };
@@ -80,7 +93,7 @@ const PostThread = ({ userId }: { userId: string }) => {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Post thread
+          {textThread ? "Edit thread" : "Post thread"}
         </Button>
       </form>
     </Form>

@@ -180,7 +180,11 @@ const TreadCard = ({
           isComment={isComment}
         />
 
-        <EditThread currentUserId={currentUserId} authorId={author?.id} />
+        <EditThread
+          currentUserId={currentUserId}
+          authorId={author?.id}
+          threadId={id}
+        />
       </div>
 
       <div className="flex gap-1">

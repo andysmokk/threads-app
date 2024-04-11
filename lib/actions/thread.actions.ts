@@ -59,7 +59,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
-interface Params {
+interface ParamsCreateThread {
   text: string;
   author: string;
   communityId: string | null;
@@ -71,7 +71,7 @@ export async function createThread({
   author,
   communityId,
   path,
-}: Params) {
+}: ParamsCreateThread) {
   try {
     connectToDB();
 
@@ -101,6 +101,24 @@ export async function createThread({
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to create thread: ${error.message}`);
+  }
+}
+
+interface ParamsEditThread {
+  text: string;
+  threadId: string;
+  path: string;
+}
+
+export async function editThread({ text, threadId, path }: ParamsEditThread) {
+  try {
+    connectToDB();
+
+    const thread = await Thread.findByIdAndUpdate(threadId, { text: text });
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to edit thread: ${error.message}`);
   }
 }
 
@@ -368,7 +386,7 @@ export async function getReactionOfUser(
     const isLiked = thread.likes.some(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
-    console.log("🚀 ~ isLiked:", isLiked);
+    // console.log("🚀 ~ isLiked:", isLiked);
     // revalidatePath(path);
 
     return isLiked;
