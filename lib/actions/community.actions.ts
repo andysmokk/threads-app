@@ -96,6 +96,15 @@ export async function fetchCommunityPosts(id: string) {
             select: "image _id", // Select the "name" and "_id" fields from the "User" model
           },
         },
+        {
+          path: "likes",
+          model: Thread,
+          populate: {
+            path: "user",
+            model: User,
+            select: "image", // Select the "image" field from the "User" model
+          },
+        },
       ],
     });
 
