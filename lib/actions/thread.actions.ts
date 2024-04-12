@@ -211,7 +211,7 @@ export async function fetchThreadById(threadId: string) {
         populate: {
           path: "user",
           model: User,
-          select: "image", // Select the "image" field from the "User" model
+          select: "image username name id", // Select the "image" field from the "User" model
         },
       })
       .populate({
