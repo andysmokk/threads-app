@@ -24,8 +24,8 @@ import { createThread, editThread } from "@/lib/actions/thread.actions";
 
 interface Props {
   userId: string;
-  textThread: string;
-  threadId: string;
+  textThread?: string;
+  threadId?: string | "";
   // user: {
   //   id: string;
   //   objectId: string;
@@ -52,7 +52,7 @@ const PostThread = ({ userId, textThread, threadId }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-    if (textThread) {
+    if (textThread && threadId) {
       await editThread({
         text: values.thread,
         threadId,
