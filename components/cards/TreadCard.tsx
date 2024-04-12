@@ -152,7 +152,7 @@ const TreadCard = ({
                 )}
 
                 {isComment && likes.length > 0 && (
-                  <Link href={`/thread/${id}`}>
+                  <Link href={`/thread/likes/${id}`}>
                     <p className="mt-1 text-subtle-medium text-gray-1">
                       {likes.length} lik
                       {likes.length === 1 ? "e" : "es"}
