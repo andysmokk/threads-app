@@ -54,7 +54,7 @@ export const updateUser = async ({
       { upsert: true }
     );
 
-    if (path === "/profile/edit") {
+    if (path === `/profile/edit/${userId}`) {
       revalidatePath(path);
     }
   } catch (error: any) {

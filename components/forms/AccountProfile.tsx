@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -98,7 +98,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       path: pathname,
     });
 
-    if (pathname === "/profile/edit") {
+    if (pathname === `/profile/edit/${user.id}`) {
       router.back();
     } else {
       router.push("/");
@@ -211,7 +211,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Submit
+          {btnTitle}
         </Button>
       </form>
     </Form>
