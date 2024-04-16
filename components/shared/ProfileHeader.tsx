@@ -20,6 +20,7 @@ const ProfileHeader = ({
   bio,
   type,
 }: Props) => {
+  // const isCurrentUser = accountId === authUserId;
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
@@ -41,13 +42,20 @@ const ProfileHeader = ({
           </div>
         </div>
 
-        <Link
-          href={`/profile/edit/${accountId}`}
-          className="flex p-3 bg-dark-3 rounded-lg"
-        >
-          <Image src="/assets/edit.svg" alt="edit-img" width={24} height={24} />
-          <p className="text-base-medium text-light-2 ml-2">Edit Profile</p>
-        </Link>
+        {accountId === authUserId && (
+          <Link
+            href={`/profile/edit/${accountId}`}
+            className="flex p-3 bg-dark-3 rounded-lg"
+          >
+            <Image
+              src="/assets/edit.svg"
+              alt="edit-img"
+              width={24}
+              height={24}
+            />
+            <p className="text-base-medium text-light-2 ml-2">Edit Profile</p>
+          </Link>
+        )}
       </div>
 
       <p className="mt-6 max-lg text-base-regular text-light-2">{bio}</p>

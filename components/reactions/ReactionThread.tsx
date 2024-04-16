@@ -50,7 +50,7 @@ const ReactionThread = ({ threadId, userId }: Props) => {
         userId,
         // path: pathname,
       });
-      console.log("🚀 ~ fetchLikeOfUser ~ isLiked:", isLiked);
+      // console.log("🚀 ~ fetchLikeOfUser ~ isLiked:", isLiked);
       setLikeOfUser(isLiked);
     };
 
