@@ -390,8 +390,8 @@ export async function getReactionOfUser(
     // revalidatePath(path);
 
     return isLiked;
-  } catch (err) {
-    console.error("Error while creating reaction:", err);
+  } catch (err: any) {
+    console.error("Error while creating reaction:", err.message);
     throw new Error("Unable to create reaction");
   }
 }

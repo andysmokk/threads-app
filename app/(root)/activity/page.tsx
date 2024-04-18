@@ -12,16 +12,19 @@ const Page = async () => {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const activities = await getActivity(userInfo._id);
+  const { replies, likes } = await getActivity(userInfo._id);
+
+  const activities = replies.concat(likes);
+  console.log("🚀 ~ Page ~ activities:", activities);
 
   return (
     <section>
       <h1 className="mt-10 head-text">Activities</h1>
 
       <section className="mt-10 flex flex-col gap-5">
-        {activities.length > 0 ? (
+        {replies.length > 0 ? (
           <>
-            {activities.map((activity) => (
+            {replies.map((activity) => (
               <Link key={activity._id} href={`/thread/${activity.parentId}`}>
                 <article className="activity-card">
                   <Image
@@ -36,6 +39,32 @@ const Page = async () => {
                       {activity.author.name}
                     </span>{" "}
                     replied to your thread
+                  </p>
+                </article>
+              </Link>
+            ))}
+          </>
+        ) : (
+          <p className="!text-base-regular text-light-3">No activity yet</p>
+        )}
+
+        {likes.length > 0 ? (
+          <>
+            {likes.map((activity) => (
+              <Link key={activity._id} href={`/thread/${activity.parentId}`}>
+                <article className="activity-card">
+                  <Image
+                    src={activity.user.image}
+                    alt="User Logo"
+                    width={30}
+                    height={30}
+                    className="rounded-full object-cover activity-user-img"
+                  />
+                  <p className="!text-small-regular text-light-1">
+                    <span className="mr-1 text-primary-500">
+                      {activity.user.name}
+                    </span>{" "}
+                    liked your thread
                   </p>
                 </article>
               </Link>

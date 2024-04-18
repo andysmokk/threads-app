@@ -175,6 +175,24 @@ export const getActivity = async (userId: string) => {
       return acc.concat(userThread.children);
     }, []);
 
+    const likedThreadIds = userThreads.reduce((acc, userThread) => {
+      return acc.concat(userThread._id);
+    }, []);
+    console.log("🚀 ~ likedThreadIds ~ likedThreadIds:", likedThreadIds);
+
+    const likedThreads = await Thread.find({
+      _id: { $in: likedThreadIds },
+    })
+      .select("likes")
+      .populate({
+        path: "likes.user",
+        model: User,
+        select: "name image _id",
+      });
+    console.log("🚀 ~ getActivity ~ likedThreads:", likedThreads);
+
+    const likes = likedThreads.map((like) => like.likes).flat();
+    console.log("🚀 ~ getActivity ~ likes:", likes);
     // Find and return the child threads (replies) excluding the ones created by the same user
     const replies = await Thread.find({
       _id: { $in: childThreadIds },
@@ -185,7 +203,7 @@ export const getActivity = async (userId: string) => {
       select: "name image _id",
     });
 
-    return replies;
+    return { replies, likes };
   } catch (error) {
     console.error("Error fetching replies: ", error);
     throw error;
