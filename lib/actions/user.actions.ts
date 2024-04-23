@@ -169,6 +169,7 @@ export const getActivity = async (userId: string) => {
 
     // Find all threads created by the user
     const userThreads = await Thread.find({ author: userId });
+    console.log("🚀 ~ getActivity ~ userThreads:", userThreads);
 
     // Collect all the child thread ids (replies) from the 'children' field of each user thread
     const childThreadIds = userThreads.reduce((acc, userThread) => {
@@ -191,7 +192,12 @@ export const getActivity = async (userId: string) => {
       });
     console.log("🚀 ~ getActivity ~ likedThreads:", likedThreads);
 
-    const likes = likedThreads.map((like) => like.likes).flat();
+    const likes = likedThreads.flatMap((thread) =>
+      thread.likes.map((like: any) => ({
+        ...like.toObject(),
+        threadId: thread._id,
+      }))
+    );
     console.log("🚀 ~ getActivity ~ likes:", likes);
     // Find and return the child threads (replies) excluding the ones created by the same user
     const replies = await Thread.find({

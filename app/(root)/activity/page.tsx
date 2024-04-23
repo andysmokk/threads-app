@@ -45,7 +45,10 @@ const Page = async () => {
                 </article>
               </Link>
             ) : (
-              <Link key={activity._id} href={`/thread/${activity.parentId}`}>
+              <Link
+                key={activity._id}
+                href={`/thread/likes/${activity.threadId}`}
+              >
                 <article className="activity-card">
                   <Image
                     src={activity.user.image}
