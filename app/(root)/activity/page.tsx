@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { fetchUser, getActivity } from "@/lib/actions/user.actions";
+import { formatDateString } from "@/lib/utils";
 
 const Page = async () => {
   const user = await currentUser();
@@ -21,7 +22,7 @@ const Page = async () => {
 
   return (
     <section>
-      <h1 className="mt-10 head-text">Activities</h1>
+      <h1 className="head-text">Activities</h1>
 
       <section className="mt-10 flex flex-col gap-5">
         {activities &&
@@ -41,6 +42,10 @@ const Page = async () => {
                       {activity.author.name}
                     </span>{" "}
                     replied to your thread
+                    <span className="text-gray-1">
+                      {" "}
+                      ~ {formatDateString(activity.createdAt)}
+                    </span>
                   </p>
                 </article>
               </Link>
@@ -62,6 +67,10 @@ const Page = async () => {
                       {activity.user.name}
                     </span>{" "}
                     liked your thread
+                    <span className="text-gray-1">
+                      {" "}
+                      ~ {formatDateString(activity.createdAt)}
+                    </span>
                   </p>
                 </article>
               </Link>
