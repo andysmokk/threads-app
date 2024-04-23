@@ -65,9 +65,9 @@ const Page = async () => {
             )
           )}
 
-        {activities.length === 0 ? (
+        {activities.length === 0 && (
           <p className="!text-base-regular text-light-3">No activity yet</p>
-        ) : null}
+        )}
         {/* {replies.length > 0 ? (
           <>
             {replies.map((activity) => (
