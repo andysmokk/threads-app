@@ -18,7 +18,6 @@ const Page = async () => {
   const activities = replies
     .concat(likes)
     .sort((a, b) => b.createdAt - a.createdAt);
-  console.log("🚀 ~ Page ~ activities:", activities);
 
   return (
     <section>
@@ -80,57 +79,6 @@ const Page = async () => {
         {activities.length === 0 && (
           <p className="!text-base-regular text-light-3">No activity yet</p>
         )}
-        {/* {replies.length > 0 ? (
-          <>
-            {replies.map((activity) => (
-              <Link key={activity._id} href={`/thread/${activity.parentId}`}>
-                <article className="activity-card">
-                  <Image
-                    src={activity.author.image}
-                    alt="User Logo"
-                    width={30}
-                    height={30}
-                    className="rounded-full object-cover activity-user-img"
-                  />
-                  <p className="!text-small-regular text-light-1">
-                    <span className="mr-1 text-primary-500">
-                      {activity.author.name}
-                    </span>{" "}
-                    replied to your thread
-                  </p>
-                </article>
-              </Link>
-            ))}
-          </>
-        ) : (
-          <p className="!text-base-regular text-light-3">No activity yet</p>
-        )} */}
-
-        {/* {likes.length > 0 ? (
-          <>
-            {likes.map((activity) => (
-              <Link key={activity._id} href={`/thread/${activity.parentId}`}>
-                <article className="activity-card">
-                  <Image
-                    src={activity.user.image}
-                    alt="User Logo"
-                    width={30}
-                    height={30}
-                    className="rounded-full object-cover activity-user-img"
-                  />
-                  <p className="!text-small-regular text-light-1">
-                    <span className="mr-1 text-primary-500">
-                      {activity.user.name}
-                    </span>{" "}
-                    liked your thread
-                  </p>
-                </article>
-              </Link>
-            ))}
-          </>
-        ) : (
-          <p className="!text-base-regular text-light-3">No activity yet</p>
-        )} */}
       </section>
     </section>
   );
