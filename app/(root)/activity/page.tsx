@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { fetchUser, getActivity } from "@/lib/actions/user.actions";
 import { formatDateString } from "@/lib/utils";
+import Pagination from "@/components/shared/Pagination";
 
 const Page = async () => {
   const user = await currentUser();
@@ -80,6 +81,7 @@ const Page = async () => {
           <p className="!text-base-regular text-light-3">No activity yet</p>
         )}
       </section>
+      {/* <Pagination pageNumber={1} isNext={activities.isNext} path={} /> */}
     </section>
   );
 };

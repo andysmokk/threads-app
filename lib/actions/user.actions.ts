@@ -169,7 +169,6 @@ export const getActivity = async (userId: string) => {
 
     // Find all threads created by the user
     const userThreads = await Thread.find({ author: userId });
-    console.log("🚀 ~ getActivity ~ userThreads:", userThreads);
 
     // Collect all the child thread ids (replies) from the 'children' field of each user thread
     const childThreadIds = userThreads.reduce((acc, userThread) => {
@@ -179,7 +178,6 @@ export const getActivity = async (userId: string) => {
     const likedThreadIds = userThreads.reduce((acc, userThread) => {
       return acc.concat(userThread._id);
     }, []);
-    console.log("🚀 ~ likedThreadIds ~ likedThreadIds:", likedThreadIds);
 
     const likedThreads = await Thread.find({
       _id: { $in: likedThreadIds },
@@ -198,7 +196,7 @@ export const getActivity = async (userId: string) => {
         threadId: thread._id,
       }))
     );
-    console.log("🚀 ~ getActivity ~ likes:", likes);
+    // console.log("🚀 ~ getActivity ~ likes:", likes);
     // Find and return the child threads (replies) excluding the ones created by the same user
     const replies = await Thread.find({
       _id: { $in: childThreadIds },
