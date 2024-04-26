@@ -9,7 +9,6 @@ import { profileTabs } from "@/constants";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 
 const Page = async ({ params }: { params: { id: string } }) => {
-  // console.log("🚀 ~ Page ~ params:", params);
   const user = await currentUser();
   if (!user) return null;
 
