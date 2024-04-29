@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface Props {
   authorId: string;
   currentUserId: string;
   threadId: string;
-  // authorId: string;
-  // parentId: string | null;
-  // isComment?: boolean;
 }
 
 const EditThread = ({ authorId, currentUserId, threadId }: Props) => {

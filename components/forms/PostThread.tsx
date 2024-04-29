@@ -2,6 +2,10 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { usePathname, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useOrganization } from "@clerk/nextjs";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,33 +16,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useOrganization } from "@clerk/nextjs";
-
-import { usePathname, useRouter } from "next/navigation";
-
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread, editThread } from "@/lib/actions/thread.actions";
-// import EditThread from "./EditThread";
-// import { updateUser } from "@/lib/actions/user.actions";
 
 interface Props {
   userId: string;
   textThread?: string;
   threadId?: string | "";
-  // user: {
-  //   id: string;
-  //   objectId: string;
-  //   name: string;
-  //   username: string;
-  //   bio: string;
-  //   image: string;
-  // };
-  // btnTitle: string;
 }
 
 const PostThread = ({ userId, textThread, threadId }: Props) => {
-  // console.log("🚀 ~ PostThread ~ textThread:", textThread);
   const router = useRouter();
   const pathname = usePathname();
   const { organization } = useOrganization();

@@ -6,8 +6,6 @@ import DeleteThread from "../forms/DeleteThread";
 import ReactionThread from "../reactions/ReactionThread";
 import EditThread from "../forms/EditThread";
 
-// import mongoose from "mongoose";
-
 interface Props {
   id: string;
   currentUserId: string;
@@ -49,12 +47,6 @@ const TreadCard = ({
   isComment,
   likes,
 }: Props) => {
-  // console.log("🚀 ~ likes:", likes);
-  // console.log("🚀 ~ currentUserId:", currentUserId);
-  // console.log("🚀 ~ author:", author);
-  // const objectId = new mongoose.Types.ObjectId(author._id);
-  // console.log("🚀 ~ objectId:", objectId);
-
   return (
     <article
       className={`flex w-full flex-col rounded-xl 
@@ -88,23 +80,8 @@ const TreadCard = ({
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
             <div className={`${isComment && "pb-10"} mt-5 flex flex-col gap-3`}>
-              <div
-                className={`${isComment ? "pb-0" : "pb-5"} flex gap-3.5`}
-                // className="flex gap-3.5 pb-5"
-              >
-                {/* <Image
-                  src="/assets/heart-gray.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                /> */}
-                <ReactionThread
-                  threadId={id}
-                  userId={currentUserId}
-                  // authorId={objectId}
-                  // isLiked={false}
-                />
+              <div className={`${isComment ? "pb-0" : "pb-5"} flex gap-3.5`}>
+                <ReactionThread threadId={id} userId={currentUserId} />
                 <Link href={`/thread/${id}`}>
                   <Image
                     src="/assets/reply.svg"
@@ -130,13 +107,6 @@ const TreadCard = ({
                 />
               </div>
 
-              {/* <ReactionThread
-                threadId={id}
-                userId={currentUserId}
-                // authorId={objectId}
-                // isLiked={false}
-              /> */}
-
               <div className="flex flex-row gap-2">
                 {isComment && comments.length > 0 && (
                   <Link href={`/thread/${id}`}>
@@ -160,14 +130,6 @@ const TreadCard = ({
                   </Link>
                 )}
               </div>
-
-              {/* {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
-                  <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} repl{comments.length === 1 ? "y" : "ies"}
-                  </p>
-                </Link>
-              )} */}
             </div>
           </div>
         </div>
