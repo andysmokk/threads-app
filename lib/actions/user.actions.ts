@@ -188,7 +188,6 @@ export const getActivity = async (userId: string) => {
         model: User,
         select: "name image _id",
       });
-    console.log("🚀 ~ getActivity ~ likedThreads:", likedThreads);
 
     const likes = likedThreads.flatMap((thread) =>
       thread.likes.map((like: any) => ({
@@ -196,7 +195,6 @@ export const getActivity = async (userId: string) => {
         threadId: thread._id,
       }))
     );
-    // console.log("🚀 ~ getActivity ~ likes:", likes);
     // Find and return the child threads (replies) excluding the ones created by the same user
     const replies = await Thread.find({
       _id: { $in: childThreadIds },

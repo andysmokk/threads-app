@@ -61,10 +61,6 @@ export async function fetchCommunityDetails(id: string) {
         select: "name username image _id id",
       },
     ]);
-    console.log(
-      "🚀 ~ fetchCommunityDetails ~ communityDetails:",
-      communityDetails
-    );
 
     return communityDetails;
   } catch (error) {

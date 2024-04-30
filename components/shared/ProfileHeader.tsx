@@ -20,7 +20,6 @@ const ProfileHeader = ({
   bio,
   type,
 }: Props) => {
-  // const isCurrentUser = accountId === authUserId;
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">

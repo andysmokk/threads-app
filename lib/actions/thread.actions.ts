@@ -281,11 +281,7 @@ export async function addCommentToThread(
   }
 }
 
-export async function fetchReactions(
-  { threadId }: { threadId: string }
-  // userId: string
-  // path: string
-) {
+export async function fetchReactions({ threadId }: { threadId: string }) {
   try {
     connectToDB();
 
@@ -296,8 +292,6 @@ export async function fetchReactions(
 
     const countLikes = thread.likes.length;
 
-    // revalidatePath(path);
-
     return countLikes;
   } catch (err) {
     console.error(" :", err);
@@ -305,28 +299,24 @@ export async function fetchReactions(
   }
 }
 
-export async function createReaction(
-  { threadId, userId, path }: { threadId: string; userId: string; path: string }
-  // threadId: string,
-  // userId: string
-  // authorId: string
-  // path: string
-) {
-  // console.log("🚀 ~ threadId:", threadId);
-  // console.log("🚀 ~ authorId:", authorId);
-  // console.log("🚀 ~ userId:", userId);
+export async function createReaction({
+  threadId,
+  userId,
+  path,
+}: {
+  threadId: string;
+  userId: string;
+  path: string;
+}) {
   try {
     connectToDB();
 
     const currentUser = await User.findOne({ id: userId });
-    // console.log("🚀 ~ currentUser:", currentUser._id.toString());
     const thread = await Thread.findById(threadId);
-    // console.log("🚀 ~ thread:", thread);
 
     const existingLike = thread.likes.find(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
-    // console.log("🚀 ~ existingLike:", existingLike);
 
     if (existingLike) {
       // delete a like if it exist
@@ -342,52 +332,30 @@ export async function createReaction(
       );
     }
 
-    // if (existingLike) {
-    //   const likeIndex = thread.likes.indexOf(existingLike);
-    //   thread.likes.splice(likeIndex, 1);
-    // } else {
-    //   // Інакше створюйте новий лайк
-    //   const like = {
-    //     user: new Types.ObjectId(currentUser._id),
-    //     createdAt: new Date(),
-    //   };
-    //   thread.likes.push(like);
-    // }
-
-    // await thread.save();
     revalidatePath(path);
-
-    // console.log("🚀 ~ thread2:", thread);
   } catch (err) {
     console.error("Error while creating reaction:", err);
     throw new Error("Unable to create reaction");
   }
 }
 
-export async function getReactionOfUser(
-  { threadId, userId }: { threadId: string; userId: string }
-
-  // threadId: string,
-  // userId: string
-  // authorId: string
-  // path: string
-) {
+export async function getReactionOfUser({
+  threadId,
+  userId,
+}: {
+  threadId: string;
+  userId: string;
+}) {
   try {
     connectToDB();
 
     const currentUser = await User.findOne({ id: userId });
 
     const thread = await Thread.findById(threadId);
-    //   .populate({
-    //   path: "likes",
-    //   model: Thread,
-    // });
 
     const isLiked = thread.likes.some(
       (like: any) => like.user.toString() === currentUser._id.toString()
     );
-    // console.log("🚀 ~ isLiked:", isLiked);
-    // revalidatePath(path);
 
     return isLiked;
   } catch (err: any) {
