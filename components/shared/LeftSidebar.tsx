@@ -7,6 +7,7 @@ import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
 
 import { sidebarLinks } from "@/constants";
 
+
 const LeftSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();

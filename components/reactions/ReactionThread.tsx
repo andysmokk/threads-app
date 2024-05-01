@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import {
   createReaction,
   fetchReactions,
   getReactionOfUser,
 } from "@/lib/actions/thread.actions";
-
-import { usePathname } from "next/navigation";
 
 interface Props {
   threadId: string;
