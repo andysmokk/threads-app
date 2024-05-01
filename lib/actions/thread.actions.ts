@@ -354,7 +354,7 @@ export async function getReactionOfUser({
     const thread = await Thread.findById(threadId);
 
     const isLiked = thread.likes.some(
-      (like: any) => like.user.toString() === currentUser._id.toString()
+      (like: any) => like.user.toString() === currentUser?._id.toString()
     );
 
     return isLiked;
