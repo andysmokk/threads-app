@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-
 import { connectToDB } from "../mongoose";
 
 export const fetchUser = async (userId: string) => {
@@ -98,9 +97,8 @@ export const fetchUserPosts = async (userId: string) => {
     });
 
     return threads;
-  } catch (error) {
-    console.error("Error fetching user threads:", error);
-    throw error;
+  } catch (error: any) {
+    throw new Error(`Failed fetching user threads: ${error.message}`);
   }
 };
 
@@ -157,9 +155,8 @@ export const fetchUsers = async ({
     const isNext = totalUsersCount > skipAmount + users.length;
 
     return { users, isNext };
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
+  } catch (error: any) {
+    throw new Error(`Failed fetching users: ${error.message}`);
   }
 };
 
@@ -206,8 +203,7 @@ export const getActivity = async (userId: string) => {
     });
 
     return { replies, likes };
-  } catch (error) {
-    console.error("Error fetching replies: ", error);
-    throw error;
+  } catch (error: any) {
+    throw new Error(`Error fetching replies: ${error.message}`);
   }
 };

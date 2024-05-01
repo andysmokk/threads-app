@@ -1,62 +1,64 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
-import { connectToDB } from "../mongoose";
+import { Types } from "mongoose";
 
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
-
 import Community from "../models/community.model";
-import { Types } from "mongoose";
+import { connectToDB } from "../mongoose";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
-  connectToDB();
+  try {
+    connectToDB();
 
-  // Calculate the number of posts to skip based on the page number and page size.
-  const skipAmount = (pageNumber - 1) * pageSize;
+    // Calculate the number of posts to skip based on the page number and page size.
+    const skipAmount = (pageNumber - 1) * pageSize;
 
-  // Create a query to fetch the posts that have no parent (top-level threads) (a thread that is not a comment/reply).
-  const postsQuery = Thread.find({ parentId: { $in: [null, undefined] } })
-    .sort({ createdAt: "desc" })
-    .skip(skipAmount)
-    .limit(pageSize)
-    .populate({
-      path: "author",
-      model: User,
-    })
-    .populate({
-      path: "community",
-      model: Community,
-    })
-    .populate({
-      path: "likes",
-      model: Thread,
-      populate: {
-        path: "user",
+    // Create a query to fetch the posts that have no parent (top-level threads) (a thread that is not a comment/reply).
+    const postsQuery = Thread.find({ parentId: { $in: [null, undefined] } })
+      .sort({ createdAt: "desc" })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .populate({
+        path: "author",
         model: User,
-        select: "image", // Select the "image" field from the "User" model
-      },
-    })
-    .populate({
-      path: "children", // Populate the children field
-      populate: {
-        path: "author", // Populate the author field within children
-        model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
-      },
-    });
+      })
+      .populate({
+        path: "community",
+        model: Community,
+      })
+      .populate({
+        path: "likes",
+        model: Thread,
+        populate: {
+          path: "user",
+          model: User,
+          select: "image", // Select the "image" field from the "User" model
+        },
+      })
+      .populate({
+        path: "children", // Populate the children field
+        populate: {
+          path: "author", // Populate the author field within children
+          model: User,
+          select: "_id name parentId image", // Select only _id and username fields of the author
+        },
+      });
 
-  // Count the total number of top-level posts (threads) i.e., threads that are not comments.
-  const totalPostsCount = await Thread.countDocuments({
-    parentId: { $in: [null, undefined] },
-  }); // Get the total count of posts
+    // Count the total number of top-level posts (threads) i.e., threads that are not comments.
+    const totalPostsCount = await Thread.countDocuments({
+      parentId: { $in: [null, undefined] },
+    }); // Get the total count of posts
 
-  const posts = await postsQuery.exec();
+    const posts = await postsQuery.exec();
 
-  const isNext = totalPostsCount > skipAmount + posts.length;
+    const isNext = totalPostsCount > skipAmount + posts.length;
 
-  return { posts, isNext };
+    return { posts, isNext };
+  } catch (error: any) {
+    throw new Error(`Failed to get posts: ${error.message}`);
+  }
 }
 
 interface ParamsCreateThread {
@@ -236,9 +238,8 @@ export async function fetchThreadById(threadId: string) {
       .exec();
 
     return thread;
-  } catch (err) {
-    console.error("Error while fetching thread:", err);
-    throw new Error("Unable to fetch thread");
+  } catch (error: any) {
+    throw new Error(`Failed to fetch thread: ${error.message}`);
   }
 }
 
@@ -248,9 +249,8 @@ export async function addCommentToThread(
   userId: string,
   path: string
 ) {
-  connectToDB();
-
   try {
+    connectToDB();
     // Find the original thread by its ID
     const originalThread = await Thread.findById(threadId);
 
@@ -275,9 +275,8 @@ export async function addCommentToThread(
     await originalThread.save();
 
     revalidatePath(path);
-  } catch (err) {
-    console.error("Error while adding comment:", err);
-    throw new Error("Unable to add comment");
+  } catch (error: any) {
+    throw new Error(`Failed to add comment: ${error.message}`);
   }
 }
 
@@ -293,9 +292,8 @@ export async function fetchReactions({ threadId }: { threadId: string }) {
     const countLikes = thread.likes.length;
 
     return countLikes;
-  } catch (err) {
-    console.error(" :", err);
-    throw new Error(" ");
+  } catch (error: any) {
+    throw new Error(`Failed to get reactions: ${error.message}`);
   }
 }
 
@@ -333,9 +331,8 @@ export async function createReaction({
     }
 
     revalidatePath(path);
-  } catch (err) {
-    console.error("Error while creating reaction:", err);
-    throw new Error("Unable to create reaction");
+  } catch (error: any) {
+    throw new Error(`Failed to create reaction: ${error.message}`);
   }
 }
 
@@ -358,8 +355,7 @@ export async function getReactionOfUser({
     );
 
     return isLiked;
-  } catch (err: any) {
-    console.error("Error while creating reaction:", err.message);
-    throw new Error("Unable to create reaction");
+  } catch (error: any) {
+    throw new Error(`Failed to create reaction: ${error.message}`);
   }
 }
