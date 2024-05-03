@@ -7,7 +7,6 @@ import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
 
 import { sidebarLinks } from "@/constants";
 
-
 const LeftSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -27,7 +26,8 @@ const LeftSidebar = () => {
             <Link
               href={link.route}
               key={link.label}
-              className={`leftsidebar_link ${isActive && "bg-primary-500"}`}
+              className={`leftsidebar_link ${isActive && "bg-primary-500"} 
+              hover:bg-primary-500 focus:bg-primary-500`}
             >
               <Image
                 src={link.imgURL}
@@ -44,7 +44,11 @@ const LeftSidebar = () => {
       <div className="mt-10 px-6">
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push("/sign-in")}>
-            <div className="flex cursor-pointer gap-4 p-4">
+            <Link
+              href=""
+              className="flex cursor-pointer gap-4 p-4 rounded-lg 
+            hover:bg-primary-500 focus:bg-primary-500"
+            >
               <Image
                 src="/assets/logout.svg"
                 alt="logout"
@@ -53,7 +57,7 @@ const LeftSidebar = () => {
               />
 
               <p className="text-light-2 max-lg:hidden">Logout</p>
-            </div>
+            </Link>
           </SignOutButton>
         </SignedIn>
       </div>
